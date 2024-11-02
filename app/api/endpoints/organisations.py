@@ -8,7 +8,7 @@ from app.models import CreateOrganisation, Organisation
 router = APIRouter()
 
 
-# TODO: Changed the endpoint to "/" for RESTful Consistency
+# Changed the endpoint to "/" for RESTful Consistency
 @router.post("/", response_model=Organisation)
 def create_organisation(
         create_organisation: CreateOrganisation,
@@ -43,4 +43,4 @@ def get_organisation(
     return organisation
 
 
-# TODO: Moved the locations endpoints to their own file locations.py for RESTful consistency
+# Moved the locations endpoints to their own file locations.py for RESTful consistency
