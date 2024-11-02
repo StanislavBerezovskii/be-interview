@@ -4,7 +4,7 @@ from app.models import Base, Organisation
 
 
 class Location(Base, table=True):
-    __tablename__ = "locations"
+    __tablename__ = "location"
     id: int | None = Field(primary_key=True)
     organisation_id: int = Field(foreign_key="organisation.id")
     organisation: Organisation = Relationship()
@@ -14,7 +14,7 @@ class Location(Base, table=True):
 
 
 class CreateLocation(Base):
-    organisation_id: int
+    # organisation_id: int
     location_name: str
     longitude: float
     latitude: float

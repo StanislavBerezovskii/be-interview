@@ -8,6 +8,6 @@ class CreateOrganisation(Base):
 
 
 class Organisation(Base, table=True):
-    __tablename__ = "organisations"
+    __tablename__ = "organisation"
     id: int | None = Field(primary_key=True)
     name: str

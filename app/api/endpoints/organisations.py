@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from sqlmodel import select, Session
 
 from app.core.db import get_db
+from app.crud.organisations import crud_organisation
 # Rerouted the imports via app/models/__init__.py file for readability and briefness
 from app.models import CreateOrganisation, Organisation
 
@@ -11,15 +12,12 @@ router = APIRouter()
 # Changed the endpoint to "/" for RESTful Consistency
 @router.post("/", response_model=Organisation)
 def create_organisation(
-        create_organisation: CreateOrganisation,
+        organisation_create: CreateOrganisation,
         session: Session = Depends(get_db)
 ) -> Organisation:
     """Creates an organisation."""
-    organisation = Organisation(name=create_organisation.name)
-    session.add(organisation)
-    session.commit()
-    session.refresh(organisation)
-    return organisation
+    new_organisation = crud_organisation.create(obj_in=organisation_create, session=session)
+    return new_organisation
 
 
 @router.get("/", response_model=list[Organisation])
@@ -27,7 +25,7 @@ def get_organisations(
         session: Session = Depends(get_db)
 ) -> list[Organisation]:
     """Gets all organisations."""
-    organisations = session.exec(select(Organisation)).all()
+    organisations = crud_organisation.get_all(session=session)
     return organisations
 
 
@@ -37,9 +35,7 @@ def get_organisation(
         session: Session = Depends(get_db)
 ) -> Organisation:
     """Gets an organisation by id."""
-    organisation = session.get(Organisation, organisation_id)
-    if organisation is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Organisation not found")
+    organisation = crud_organisation.get(obj_id=organisation_id, session=session)
     return organisation
 
 

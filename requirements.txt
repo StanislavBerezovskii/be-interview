@@ -4,7 +4,9 @@ fastapi==0.115.4
 httpx
 isort
 mypy
-pytest
+pytest~=8.3.3
 ruff
 sqlmodel>=0.0.22
 uvicorn~=0.32
+
+SQLAlchemy~=2.0.36
