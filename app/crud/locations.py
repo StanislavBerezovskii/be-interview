@@ -17,6 +17,7 @@ class CRUDLocation(CRUDBase):
 
     def get_organisation_locations(self, organisation_id: int, session: Session) -> list[dict]:
         """Gets all locations for an organisation."""
+        # Refactored the query to avoid double DB calls
         db_locations_data = session.execute(
             select(Location.location_name, Location.longitude, Location.latitude)
             .where(Location.organisation_id == organisation_id)
