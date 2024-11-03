@@ -10,3 +10,4 @@ sqlmodel>=0.0.22
 uvicorn~=0.32
 
 SQLAlchemy~=2.0.36
+pydantic~=2.9.2

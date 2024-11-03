@@ -1,3 +1,3 @@
 from .base import Base
-from .organisations import CreateOrganisation, Organisation
-from .locations import CreateLocation, Location
+from .organisations import Organisation
+from .locations import Location

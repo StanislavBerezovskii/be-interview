@@ -19,11 +19,17 @@ class CRUDBase:
         db_objs = session.execute(select(self.model))
         return db_objs.scalars().all()
 
+    def get_id_by_name(self, obj_name: str, session: Session):
+        """Returns the ID of an object by name from the database
+        Created for name validation when creating new database instances"""
+        db_obj_id = session.execute(
+            select(self.model.id).where(self.model.name == obj_name)
+        )
+        return db_obj_id.scalars().first()
+
     def create(self, obj_in, session: Session, *args, **kwargs):
-        """
-        Creates a new object in the database.
-        Allows for additional arguments for the location model creation
-        """
+        """Creates a new object in the database.
+        Allows for additional arguments for the Location instance creation"""
         obj_in_data = obj_in.dict()
         db_obj = self.model(**obj_in_data)
         session.add(db_obj)

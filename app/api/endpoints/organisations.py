@@ -1,10 +1,12 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from sqlmodel import select, Session
 
+from app.api.endpoints.validators import check_organisation_name_duplicate
 from app.core.db import get_db
 from app.crud.organisations import crud_organisation
 # Rerouted the imports via app/models/__init__.py file for readability and briefness
-from app.models import CreateOrganisation, Organisation
+from app.models import Organisation
+from app.schemas import CreateOrganisation
 
 router = APIRouter()
 
@@ -16,6 +18,7 @@ def create_organisation(
         session: Session = Depends(get_db)
 ) -> Organisation:
     """Creates an organisation."""
+    check_organisation_name_duplicate(organisation_name=organisation_create.name, session=session)
     new_organisation = crud_organisation.create(obj_in=organisation_create, session=session)
     return new_organisation
 
@@ -24,7 +27,7 @@ def create_organisation(
 def get_organisations(
         session: Session = Depends(get_db)
 ) -> list[Organisation]:
-    """Gets all organisations."""
+    """Endpoint that returns all organisation instances from the database."""
     organisations = crud_organisation.get_all(session=session)
     return organisations
 
@@ -34,7 +37,7 @@ def get_organisation(
         organisation_id: int,
         session: Session = Depends(get_db)
 ) -> Organisation:
-    """Gets an organisation by id."""
+    """Endpoint that returns an organisation instance from the database."""
     organisation = crud_organisation.get(obj_id=organisation_id, session=session)
     return organisation
 

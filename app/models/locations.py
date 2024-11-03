@@ -4,6 +4,7 @@ from app.models import Base, Organisation
 
 
 class Location(Base, table=True):
+    """Database Location model"""
     __tablename__ = "location"
     id: int | None = Field(primary_key=True)
     organisation_id: int = Field(foreign_key="organisation.id")
@@ -12,9 +13,3 @@ class Location(Base, table=True):
     longitude: float
     latitude: float
 
-
-class CreateLocation(Base):
-    # organisation_id: int
-    location_name: str
-    longitude: float
-    latitude: float
