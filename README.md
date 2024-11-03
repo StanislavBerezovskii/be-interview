@@ -64,6 +64,7 @@ The application was generally heavily restructured to better adhere to the RESTf
 principles. New packages core, crud, models, and schemas allow for improved code readability
 and ease of modification. The endpoints were also restructured to follow RESTful conventions,
 their individual routers are now plugged in into the main parent router.
+Slight changes were done to the alembic env.py to simplify Model input.
 
 ### Task 5 (Bonus): Add tests
 
